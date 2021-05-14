@@ -1,0 +1,36 @@
+{% extends 'common/base.html.j2' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Player Ranking</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Place</th>
+                <th>Player</th>
+                <th>Portfolio</th>
+                <!--<th>Initial balance</th>-->
+                <th>Balance</th>
+                <th>In the game from</th>
+            </tr>
+            </thead>
+            {% for wallet in wallets|sort(reverse=True, attribute='money') %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ wallet.owner }}</td>
+                <td><a href="/bruhproject/wallet/{{ wallet.id }}">{{ wallet.name }}</a></td>
+                <td>{{ '%0.2f' % wallet.money }} $</td>
+                <!--<td>{{ wallet.money }}</td>-->
+                <td>{{ wallet.get_lifetime() }} days</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

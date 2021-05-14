@@ -1,0 +1,30 @@
+{% extends 'common/base.html.j2' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6">
+        <h4>List of your wallets</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Balance</th>
+                <th>Creation time</th>
+            </tr>
+            </thead>
+            {% for wallet in wallets %}
+            <tr>
+            <td><a href="/bruhproject/wallet/{{ wallet.id }}">{{ wallet.name }}</a></td>
+            <td>{{ '%0.2f' % wallet.money }} $</td>
+            <td>{{ wallet.creation_time.strftime('%Y-%m-%d %H:%M') }}</td>
+            {% endfor %}
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

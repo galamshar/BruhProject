@@ -1,0 +1,30 @@
+{% extends 'common/base.html.j2' %}
+{% block content %}
+{{ event_form.media }}
+<form method="post" action="">
+    <div class="row">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
+        <div class="col-lg-8 offset-md-2">
+            <table>
+                {% for field in event_form.fields %}
+                <tr class="input-group mb-3">
+                    <td class="col-lg-4">
+                        <label for="{{ event_form[field].id_for_label }}">{{ event_form[field].label }}</label>
+                    </td>
+                    <td class="col-lg-8">
+                        {{ event_form[field]|add_class("form-control") }}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="col-lg-4">
+                    </td>
+                    <td class="col-lg-8">
+                        <input type="submit" class="btn btn-secondary" value="Add event"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>
+{% endblock %}

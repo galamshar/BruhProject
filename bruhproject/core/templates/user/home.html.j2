@@ -1,0 +1,136 @@
+{% extends 'common/base.html.j2' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 offset-md-3 center">
+        <h1>Hello, <strong>{{ username }}</strong>!</h1>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Your wallets</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Balance</th>
+            </tr>
+            </thead>
+            {% for wallet in wallets %}
+            <td><a href="/bruhproject/wallet/{{ wallet.id }}">{{ wallet.name }}</a></td>
+            <td>{{ '%0.2f' % wallet.money }} $</td>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<hr>
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Available events</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Hosts</th>
+                <th>Guests</th>
+                <th>Start date</th>
+            </tr>
+            </thead>
+            {% for event in events|sort(attribute='start_time') %}
+            <tr>
+                <td><a href="/bruhproject/event/{{ event.id }}">{{ event.name }}</a></td>
+                <td>{{ event.home_name }}</td>
+                <td>{{ event.away_name }}</td>
+                <td>{{ localtime(event.start_time).strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<hr/>
+{% if active_events %}
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Your ongoing events</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Hosts</th>
+                <th>Guests</th>
+                <th>Start date</th>
+            </tr>
+            </thead>
+            {% for event in active_events|sort(attribute='start_time') %}
+            <tr>
+                <td><a href="/bruhproject/event/{{ event.id }}">{{ event.name }}</a></td>
+                <td>{{ event.home_name }}</td>
+                <td>{{ event.away_name }}</td>
+                <td>{{ localtime(event.start_time).strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<hr/>
+{% endif %}
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <p><a href="/bruhproject/event/">All events</a></p>
+    </div>
+</div>
+
+{% if perms.core.add_event %}
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <a href="/bruhproject/event/new">
+            <button type="button" class="btn btn-secondary btn-sm btn-block">Add new</button>
+        </a>
+    </div>
+</div>
+{% endif %}
+{% if perms.core.can_close and events_to_close %}
+<div class="row pt-3">
+    <div class="col-lg-6">
+        <h4>Events to settle</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg  -10 offset-md-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Hosts</th>
+                <th>Guests</th>
+                <th>Start date</th>
+            </tr>
+            </thead>
+            {% for event in events_to_close|sort(attribute='start_time') %}
+            <tr>
+                <td><a href="/bruhproject/event/{{ event.id }}">{{ event.name }}</a></td>
+                <td>{{ event.home_name }}</td>
+                <td>{{ event.away_name }}</td>
+                <td>{{ localtime(event.start_time).strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

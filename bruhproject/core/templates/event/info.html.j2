@@ -1,0 +1,126 @@
+{% extends 'common/base.html.j2' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-1">
+        <h2><strong>#{{ event.id }}</strong></h2>
+    </div>
+    <div class="col-lg-6 offset-md-2 center">
+        <h2><strong>{{ event.name }}</strong></h2>
+    </div>
+    {% if event.result %}
+    <div class="col-lg-3 center">
+        <h2>Result: {{ event.result }}</h2>
+    </div>
+    {% endif %}
+</div>
+<hr/>
+
+<div class="row">
+    <div class="col-lg-6 offset-md-3 center">
+        <h3>{{ event.home_name }} - {{ event.away_name }}</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 offset-md-3 center">
+        <h4>{{ localtime(event.start_time).strftime('%Y-%m-%d %H:%M') }}</h4>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Odds:</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 offset-md-1 center">
+        <h4>1: {{ '%0.2f' % event.home_odd }}</h4>
+    </div>
+    <div class="col-lg-2 offset-md-2 center">
+        <h4>X: {{ '%0.2f' % event.draw_odd }}</h4>
+    </div>
+    <div class="col-lg-2 offset-md-2 centers">
+        <h4>2: {{ '%0.2f' % event.away_odd }}</h4>
+    </div>
+</div>
+
+{% if bet_form %}
+<hr/>
+<form method="post" class="center">
+    <div class="form-group">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        {{ bet_form }}
+        <button type="submit" class="btn btn-secondary">Stand!</button>
+    </div>
+</form>
+{% endif %}
+
+{% if bets %}
+<hr/>
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Included bets:</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <table class="table {% if event.open %}table-striped{% endif %}" id="bets_history">
+            <thead>
+            <tr>
+                <th>Player</th>
+                <th>Portfolio</th>
+                <th>Time of conclusion</th>
+                <th>Type</th>
+                <th>Rate</th>
+                <th>Odds</th>
+                <th>Possible win</th>
+                {% if not event.open %}
+                <th>Win</th>
+                {% endif %}
+            </tr>
+            </thead>
+
+            {% for bet in bets %}
+                {% if bet.open %}
+            <tr>
+                {% else %}
+                    {% if bet.won %}
+            <tr class="won">
+                    {% else %}
+            <tr class="lost">
+                    {% endif %}
+                {% endif %}
+                <td>{{ bet.wallet.owner}}</td>
+                <td>{{ bet.wallet }}</td>
+                <td>{{ localtime(bet.creation_time).strftime('%Y-%m-%d %H:%M') }}</td>
+                {% if user == bet.wallet.owner or event.is_active() %}
+                <td>{{ bet.chosen_result }}</td>
+                <td>{{ '%0.2f' % bet.value }} $</td>
+                <td>{{ '%0.2f' % bet.odd }}</td>
+                <td>{{ '%0.2f' % bet.reward }} $</td>
+                    {% if not bet.open %}
+                <td>{{ '%0.2f' % (bet.reward * bet.won) }} $</td>
+                    {% endif %}
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% if event.to_close and perms.core.can_close %}
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <a href="close">
+            <button type="button" class="btn btn-secondary btn-sm btn-block">Settle the event</button>
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

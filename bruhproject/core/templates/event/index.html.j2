@@ -1,0 +1,41 @@
+{% extends 'common/base.html.j2' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6">
+         <h4>List of events</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Hosts</th>
+                <th>Guests</th>
+                <th>Start time</th>
+            </tr>
+            </thead>
+            {% for event in events|sort(attribute='start_time') %}
+            <tr>
+            <td><a href="/bruhproject/event/{{ event.id }}">{{ event.name }}</a></td>
+            <td>{{ event.home_name }}</td>
+            <td>{{ event.away_name }}</td>
+            <td>{{ localtime(event.start_time).strftime('%Y-%m-%d %H:%M') }}</td>
+            {% endfor %}
+            </tr>
+        </table>
+    </div>
+</div>
+{% if perms.core.add_event %}
+<div class="row">
+    <div class="col-lg-10 offset-md-1">
+        <a href="/bruhproject/event/new">
+        <button type="button" class="btn btn-secondary btn-sm btn-block" >Add new</button>
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
