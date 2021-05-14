@@ -25,7 +25,6 @@ class Migration(migrations.Migration):
                 ('money', models.FloatField(verbose_name='Balance')),
                 ('active', models.BooleanField(default=True, verbose_name='Wallet is active')),
                 ('creation_time', models.DateTimeField(default=datetime.datetime.now, verbose_name='Creation time')),
-                ('template', models.BooleanField(default=False, verbose_name='Wallet template')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Wallet owner')),
             ],
         ),

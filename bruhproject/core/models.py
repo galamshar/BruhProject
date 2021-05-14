@@ -24,8 +24,6 @@ class Wallet(models.Model):
                                  verbose_name='Wallet is active')
     creation_time = models.DateTimeField(default=datetime.now,
                                          verbose_name='Creation time')
-    template = models.BooleanField(default=False, blank=False,
-                                   verbose_name='Wallet template')
 
     def __str__(self):
         return self.name
