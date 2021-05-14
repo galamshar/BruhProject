@@ -13,11 +13,11 @@ BET_SIDE = (
 
 class Wallet(models.Model):
     owner = models.ForeignKey(User, null=False,
-                              verbose_name='Portfolio owner', on_delete=models.CASCADE)
+                              verbose_name='Wallet owner', on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank=False,
-                            verbose_name='Portfolio name')
+                            verbose_name='Wallet name')
     description = models.TextField(blank=True,
-                                   verbose_name='Portfolio description')
+                                   verbose_name='Wallet description')
     money = models.FloatField(blank=False,
                               verbose_name='Balance')
     active = models.BooleanField(default=True, blank=False,
@@ -25,7 +25,7 @@ class Wallet(models.Model):
     creation_time = models.DateTimeField(default=datetime.now,
                                          verbose_name='Creation time')
     template = models.BooleanField(default=False, blank=False,
-                                   verbose_name='Portfolio template')
+                                   verbose_name='Wallet template')
 
     def __str__(self):
         return self.name
@@ -48,17 +48,17 @@ class Event(models.Model):
     description = models.TextField(blank=True,
                                    verbose_name='Description of the event')
     home_name = models.CharField(max_length=50, blank=False,
-                                 verbose_name='Host team name')
+                                 verbose_name='First team\'s name')
     away_name = models.CharField(max_length=50, blank=False,
-                                 verbose_name='Name of the guest team')
+                                 verbose_name='Second team\'s name')
     home_odd = models.FloatField(default=1.0, blank=False,
-                                 verbose_name='Odd to win the hosts',
+                                 verbose_name='Odd for the first team',
                                  validators=[MinValueValidator(1.0, 'The minimum Odd is 1.0.')])
     draw_odd = models.FloatField(default=1.0, blank=False,
                                  verbose_name='Odds for a draw',
                                  validators=[MinValueValidator(1.0, 'The minimum Odd is 1.0.')])
     away_odd = models.FloatField(default=1.0, blank=False,
-                                 verbose_name='Odds to win guests',
+                                 verbose_name='Odds for the second team',
                                  validators=[MinValueValidator(1.0, 'The minimum Odd is 1.0.')])
     open = models.BooleanField(default=True, blank=False,
                                verbose_name='Event not included')
@@ -80,13 +80,13 @@ class Event(models.Model):
 
 class Bet(models.Model):
     wallet = models.ForeignKey(Wallet, null=False,
-                               verbose_name='Portfolio', on_delete=models.CASCADE)
+                               verbose_name='Wallet', on_delete=models.CASCADE)
     chosen_result = models.IntegerField(blank=False, choices=BET_SIDE,
-                                        verbose_name='Typical result')
+                                        verbose_name='Result')
     event = models.ForeignKey(Event, null=False,
-                              verbose_name='Typical event', on_delete=models.CASCADE)
+                              verbose_name='Event', on_delete=models.CASCADE)
     value = models.FloatField(blank=False,
-                              verbose_name='Bet rate',
+                              verbose_name='Bet\'s size',
                               validators=[MinValueValidator(0.0, 'The value of the bet must not be negative!')])
     odd = models.FloatField(blank=False,
                             verbose_name='Betting odds')

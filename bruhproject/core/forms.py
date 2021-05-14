@@ -18,7 +18,7 @@ class BetEventForm(ModelForm):
         super(BetEventForm, self).clean()
         wallet = self.cleaned_data.get('wallet')
         if wallet.money < self.cleaned_data.get('value'):
-            msg = 'Insufficient funds in the portfolio!'
+            msg = 'Insufficient funds in the wallet!'
             self.add_error('value', msg)
         elif self.cleaned_data.get('value') < 1:
             msg = 'The minimum bet is 1!'
