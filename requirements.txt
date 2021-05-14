@@ -28,3 +28,5 @@ soupsieve==2.2.1
 sqlparse==0.4.1
 virtualenv==20.4.3
 virtualenv-clone==0.5.4
+
+django-crispy-forms~=1.11.2

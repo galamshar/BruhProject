@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap_datepicker_plus',
     'widget_tweaks',
-    'bootstrap4'
+    'bootstrap4',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,6 @@ STATIC_URL = '/static/'
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+LOGIN_REDIRECT_URL = '/bruhproject/'

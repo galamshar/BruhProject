@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
@@ -6,7 +7,7 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import datetime
 from .models import Wallet, Event, Bet
-from .forms import BetEventForm, NewEventForm, CloseEventForm
+from .forms import BetEventForm, NewEventForm, CloseEventForm, NewUserForm
 
 
 def group_required(group):
@@ -17,6 +18,21 @@ def group_required(group):
         return False
 
     return user_passes_test(in_groups, login_url='/bruhproject')
+
+
+def register_request(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            Wallet(owner=user, name=user.username + "`s wallet", money=0.0, active=True,
+                            description="", ).save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("/bruhproject/")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = NewUserForm
+    return render(request=request, template_name="user/register.html.j2", context={"register_form": form})
 
 
 @login_required(login_url='/login')

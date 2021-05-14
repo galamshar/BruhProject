@@ -1,4 +1,4 @@
-from bootstrap4.templatetags import bootstrap4
+from crispy_forms.templatetags.crispy_forms_filters import as_crispy_form
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils.timezone import template_localtime
@@ -18,6 +18,6 @@ def environment(**options):
         'url': reverse,
         'localtime': template_localtime,
         'render_field': widget_tweaks.render_field,
-        'bootstrap4': bootstrap4
+        'crispy' : as_crispy_form
     })
     return env

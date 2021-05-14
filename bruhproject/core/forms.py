@@ -1,6 +1,23 @@
-from django.forms import ModelForm, widgets, Textarea
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
+from django.forms import ModelForm, widgets, Textarea, EmailField
 from bootstrap_datepicker_plus import DateTimePickerInput
 from bruhproject.core.models import Bet, Event, Wallet
+
+
+class NewUserForm(UserCreationForm):
+    email = EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(NewUserForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
 
 
 class BetEventForm(ModelForm):
@@ -33,7 +50,7 @@ class NewEventForm(ModelForm):
         widgets = {
             'start_time': DateTimePickerInput(attrs={id: 'id_start_time'}),
             'end_time': DateTimePickerInput(attrs={id: 'id_end_time'}),
-            'description' : Textarea(attrs={'style': 'resize:none;'})
+            'description': Textarea(attrs={'style': 'resize:none;'})
         }
 
 

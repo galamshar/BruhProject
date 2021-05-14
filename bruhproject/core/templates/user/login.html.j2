@@ -1,12 +1,20 @@
 {% extends 'common/base.html.j2' %}
-
 {% block content %}
 <h2>Login</h2>
 <form method="post">
     <div class="form-group">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        {{ form }}
-        <button type="submit" class="btn btn-secondary">Sign in</button>
+        {% for field in form %}
+            <div class="input-group pt-3 w-25">
+                <div class="input-group-prepend">
+                    <span class="input-group-text pr-3"><i class="bi bi-box-arrow-in-right pr-1"></i>{{field.html_name.capitalize()}}</span>
+                </div>
+                <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" type="{{ field.name }}" />
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-secondary mt-3">Sign in</button>
     </div>
 </form>
+    <p class="text-center">Don`t have an account? <a href="/register">Register</a> here.</p>
 {% endblock %}
