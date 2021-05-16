@@ -94,7 +94,7 @@ class Bet(models.Model):
                                          verbose_name='Creation time')
     open = models.BooleanField(default=True, blank=False,
                                verbose_name='Unsettled bet')
-    won = models.NullBooleanField(null=True, blank=True,
+    won = models.BooleanField(null=True, blank=True,
                                   verbose_name='Unsettled bet')
 
     def __str__(self):
