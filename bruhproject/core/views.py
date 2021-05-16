@@ -9,6 +9,7 @@ from datetime import datetime
 from .models import Wallet, Event, Bet
 from .forms import BetEventForm, NewEventForm, CloseEventForm, NewUserForm
 
+# Should we create things like "Services" to move logic to them, instead of processing logic in views?
 
 def group_required(group):
     def in_groups(u):
@@ -147,6 +148,7 @@ def event_new(request):
     return render(request, 'event/new.html.j2', template_data)
 
 
+@group_required('Event admins')
 @login_required(login_url='/login')
 def event_close(request, event_id):
     event = Event.objects.get(pk=event_id)
