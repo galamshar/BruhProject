@@ -23,6 +23,7 @@ class NewUserForm(UserCreationForm):
 class BetEventForm(ModelForm):
     class Meta:
         model = Bet
+        # TODO: Rename value to "price"
         fields = ['wallet', 'chosen_result', 'value', ]
 
     def __init__(self, *args, **kwargs):
