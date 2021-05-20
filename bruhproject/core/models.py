@@ -32,73 +32,44 @@ class Wallet(models.Model):
         return (timezone.now() - self.creation_time).days
 
 
-class Event(models.Model):
-    author = models.ForeignKey(User, null=False,
-                               verbose_name='Author of the event', on_delete=models.CASCADE)
-    start_time = models.DateTimeField(blank=False,
-                                      verbose_name='Event start time')
-    end_time = models.DateTimeField(blank=False,
-                                    verbose_name='Event end time')
-    creation_time = models.DateTimeField(default=datetime.now, blank=False,
-                                         verbose_name='Event creation time')
+class Fixture(models.Model):
+    fixture_id = models.IntegerField(blank=False, verbose_name="Fixture Id")
+    participant_1 = models.CharField(max_length=50, blank=False,
+                                     verbose_name='First team\'s name')
+    participant_2 = models.CharField(max_length=50, blank=False,
+                                     verbose_name='Second team\'s name')
+    status = models.IntegerField(blank=False, verbose_name="Status of fixture")
+    start_date = models.DateTimeField(default=datetime.now, verbose_name='Start date')
+
+
+class Market(models.Model):
+    market_id = models.IntegerField(blank=False, verbose_name="Market Id")
     name = models.CharField(max_length=100, blank=False,
-                            verbose_name='Event name')
-    description = models.TextField(blank=True,
-                                   verbose_name='Description of the event')
-    home_name = models.CharField(max_length=50, blank=False,
-                                 verbose_name='First team\'s name')
-    away_name = models.CharField(max_length=50, blank=False,
-                                 verbose_name='Second team\'s name')
-    home_odd = models.FloatField(default=1.0, blank=False,
-                                 verbose_name='Odd for the first team',
-                                 validators=[MinValueValidator(1.0, 'The minimum Odd is 1.0.')])
-    draw_odd = models.FloatField(default=1.0, blank=False,
-                                 verbose_name='Odds for a draw',
-                                 validators=[MinValueValidator(1.0, 'The minimum Odd is 1.0.')])
-    away_odd = models.FloatField(default=1.0, blank=False,
-                                 verbose_name='Odds for the second team',
-                                 validators=[MinValueValidator(1.0, 'The minimum Odd is 1.0.')])
-    open = models.BooleanField(default=True, blank=False,
-                               verbose_name='Event not included')
-    result = models.IntegerField(null=True, blank=True,
-                                 verbose_name='Event result',
-                                 choices=BET_SIDE)
+                            verbose_name='Market name')
+    fixture = models.ForeignKey(Fixture, null=False, verbose_name='Fixture')
+    status = models.IntegerField(blank=False, verbose_name="Status of fixture")
 
-    def is_active(self):
-        return self.start_time <= timezone.now() and self.end_time > timezone.now()
 
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-            ('can_close', "Can insert result and close event."),
-        )
+class Variant(models.Model):
+    variant_id = models.IntegerField(blank=False, verbose_name="Variant Id")
+    market = models.ForeignKey(Market, null=False, verbose_name="Market Id")
+    name = models.CharField(max_length=100, blank=False,
+                            verbose_name='Variant name')
+    odd = models.FloatField(default=1.0, blank=False,
+                            verbose_name='Odd',
+                            validators=[MinValueValidator(1.0, 'The minimum Odd is 1.0.')])
+    status = models.IntegerField(blank=False, verbose_name="Status of variant")
+    settlement = models.IntegerField(blank=False, verbose_name="Settlement")
 
 
 class Bet(models.Model):
-    wallet = models.ForeignKey(Wallet, null=False,
-                               verbose_name='Wallet', on_delete=models.CASCADE)
-    chosen_result = models.IntegerField(blank=False, choices=BET_SIDE,
-                                        verbose_name='Result')
-    event = models.ForeignKey(Event, null=False,
-                              verbose_name='Event', on_delete=models.CASCADE)
-    value = models.FloatField(blank=False,
-                              verbose_name='Bet\'s size',
-                              validators=[MinValueValidator(0.0, 'The value of the bet must not be negative!')])
-    odd = models.FloatField(blank=False,
-                            verbose_name='Betting odds')
-    reward = models.FloatField(blank=False,
-                               verbose_name='Possible win')
-    creation_time = models.DateTimeField(default=datetime.now, blank=False,
-                                         verbose_name='Creation time')
-    open = models.BooleanField(default=True, blank=False,
-                               verbose_name='Unsettled bet')
-    won = models.BooleanField(null=True, blank=True,
-                                  verbose_name='Unsettled bet')
-
-    def __str__(self):
-        return 'Bet: ' + self.event.name
+    user = models.ForeignKey(User, null=False, verbose_name="Bet owner")
+    fixture = models.ForeignKey(Fixture, null=False, verbose_name="Fixture of bet")
+    market = models.ForeignKey(Market, null=False, verbose_name="Market of bet")
+    variant = models.ForeignKey(Variant, null=False, verbose_name="Variant of bet")
+    amount = models.FloatField(blank=False,
+                               verbose_name='Bet\'s size',
+                               validators=[MinValueValidator(0.0, 'The value of the bet must not be negative!')])
 
 
 class Friendship(models.Model):
