@@ -1,0 +1,13 @@
+{% extends 'common/base.html.j2' %}
+{% block content %}
+
+    <div class="text-center" style="margin-top:10vw">
+        <form class="deposit_pay" method="POST" action="/bruhproject/deposit/new/">
+            <h1 class="h3 mb-3 font-weight-normal">Please, enter amount of money that you would like to deposit</h1>
+            <input style="margin-top:1vw" class="form-control form-control-lg offset-md-2 col-md-8" type="text" placeholder="Deposit value" value="0" name="make_deposit">
+            <button style="margin-top:1vw" type="submit" class="btn btn-primary mb-2">Deposit</button>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        </form>
+    </div>
+
+{% endblock %}

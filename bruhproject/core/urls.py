@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^event/(?P<event_id>[0-9]+)/close/$', views.event_close, name='event close'),
     url(r'^event/new/$', views.event_new, name='event new'),
     url(r'^ranking/$', views.ranking_list, name='ranking list'),
-
+    url(r'^deposit/$', views.deposit_money_to_wallet, name='deposit'),
+    url(r'^deposit/new/$', views.finish_deposit, name='deposit finish')
 ]

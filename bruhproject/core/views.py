@@ -8,8 +8,11 @@ from django.utils import timezone
 from datetime import datetime
 from .models import Wallet, Event, Bet
 from .forms import BetEventForm, NewEventForm, CloseEventForm, NewUserForm
-
+from django.template.loader import render_to_string
+import logging
 # Should we create things like "Services" to move logic to them, instead of processing logic in views?
+
+logger = logging.getLogger(__name__)
 
 def group_required(group):
     def in_groups(u):
@@ -204,3 +207,21 @@ def get_user_active_events(user):
     active_bets = get_user_active_bets(user)
     active_events = [bet.event for bet in active_bets]
     return active_events
+
+@login_required(login_url='/login')
+def deposit_money_to_wallet(request):
+    return render(request, 'wallet/deposit.html.j2',
+                {'username': request.user.username})
+
+
+@login_required(login_url='/login')
+def finish_deposit(request):
+    if request.method == 'POST':
+        make_deposit = float(request.POST['make_deposit']) 
+        if(make_deposit > 0 and make_deposit != None):
+            user = request.user
+            wallets = Wallet.objects.filter(owner=user)
+            for wallet in wallets:
+                wallet.money += (make_deposit)
+                wallet.save()
+    return HttpResponseRedirect("/bruhproject")

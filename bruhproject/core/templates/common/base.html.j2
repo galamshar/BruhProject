@@ -19,14 +19,15 @@
             {% if username %}
             <li class="nav-item"><a class="nav-link" href="/bruhproject/wallet"><i class="bi bi-wallet2"></i> Wallets</a></li>
             <li class="nav-item"><a class="nav-link"  href="/bruhproject/event"><i class="bi bi-calendar-event"></i> Events</a></li>
-            <li class="nav-item"><a class="nav-link"  href="#"><i class="bi bi-person-lines-fill"></i></span>
-                Friends</a></li>
+            <li class="nav-item"><a class="nav-link"  href="#"><i class="bi bi-person-lines-fill"></i></span>Friends</a></li>
             <li class="nav-item"><a class="nav-link"  href="/bruhproject/ranking"><i class="bi bi-star"></i> Ranking</a></li>
             {% endif %}
         </ul>
+
         <ul class="nav navbar-nav ml-auto">
             {% if username %}
             <li class="nav-item"><a class="nav-link"  href="/bruhproject"><i class="bi bi-person-fill"></i> {{ username }}</a></li>
+            <li class="nav-item"><a class="nav-link"  href="/bruhproject/deposit"><i class="bi bi-cash-coin"></i> Deposit</a></li>
             <li class="nav-item"><a class="nav-link"  href="/logout"><i class="bi bi-box-arrow-right"></i> Sign Out</a></li>
             {% else %}
             <li class="nav-item"><a class="nav-link"  href="/login"><i class="bi bi-box-arrow-in-right"></i> Sign In</a></li>
