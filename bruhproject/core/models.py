@@ -6,6 +6,7 @@ from datetime import datetime
 
 DEFAULT_PROVIDER_ID = 8
 
+
 class Wallet(models.Model):
     owner = models.ForeignKey(User, null=False,
                               verbose_name='Wallet owner', on_delete=models.CASCADE)
@@ -33,10 +34,18 @@ class Event(models.Model):
     name = models.CharField(max_length=150)
     start_time = models.DateTimeField(blank=False, verbose_name='Event start time')
 
+    def is_active(self):
+        if self.status in range[0,2]:
+            return True
+        else:
+            return False
+
+
 class Market(models.Model):
     name = models.CharField(max_length=150)
     event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE)
     draft_id = models.IntegerField()
+
 
 class Variant(models.Model):
     id = models.BigIntegerField(primary_key=True)
@@ -46,11 +55,15 @@ class Variant(models.Model):
     odd = models.FloatField()
     settlement = models.IntegerField()
 
+    def __str__(self):
+        return self.market.name + ' - [ ' + self.name + ' ] '
+
+
 class Bet(models.Model):
     wallet = models.ForeignKey(Wallet, null=False, on_delete=models.CASCADE)
     chosen_variant = models.ForeignKey(Variant, null=False, on_delete=models.CASCADE)
     chosen_event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE)
-    settled = models.BooleanField()
+    settled = models.BooleanField(default=False)
     amount = models.FloatField()
     reward = models.FloatField()
 

@@ -8,6 +8,10 @@ body { padding-bottom: 70px; }
     background-color: #d9534f;
 }
 
+.refund {
+    background-color: #FFFF33;
+}
+
 .lost {
     background-color: #d9534f;
 }

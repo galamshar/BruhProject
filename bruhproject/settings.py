@@ -95,9 +95,9 @@ WSGI_APPLICATION = 'bruhproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'betpy',
+        'NAME': 'bruhproject',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'Zawer021',
         'HOST': 'localhost',
         'PORT': '5432',
     }
