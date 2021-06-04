@@ -14,6 +14,55 @@ from .forms import BetEventForm, NewUserForm
 from django.template.loader import render_to_string
 import logging
 
+# Rest API imports
+from django.contrib.auth.models import User
+from rest_framework import viewsets, mixins
+from rest_framework import permissions
+from bruhproject.core.serializers import UserSerializer, BetSerializer, VariantSerializer, WalletSerializer, \
+    MarketSerializer, EventSerializer
+
+
+# REST API Views
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class BetViewSet(viewsets.ModelViewSet):
+    serializer_class = BetSerializer
+    permission_classes = [permissions.IsAdminUser]
+    queryset = Bet.objects.all()
+
+
+class VariantViewSet(viewsets.ModelViewSet):
+    serializer_class = VariantSerializer
+    permission_classes = [permissions.IsAdminUser]
+    queryset = Variant.objects.all()
+
+
+class EventViewSet(viewsets.ModelViewSet):
+    serializer_class = EventSerializer
+    permission_classes = [permissions.IsAdminUser]
+    queryset = Event.objects.all()
+
+
+class MarketViewSet(viewsets.ModelViewSet):
+    serializer_class = MarketSerializer
+    permission_classes = [permissions.IsAdminUser]
+    queryset = Market.objects.all()
+
+
+class WalletViewSet(viewsets.ModelViewSet):
+    serializer_class = WalletSerializer
+    permission_classes = [permissions.IsAdminUser]
+    queryset = Wallet.objects.all()
+
+
 # Should we create things like "Services" to move logic to them, instead of processing logic in views?
 
 logger = logging.getLogger(__name__)

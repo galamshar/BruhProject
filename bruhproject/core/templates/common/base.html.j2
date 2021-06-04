@@ -3,10 +3,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+            integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/static/css/style.css"/>
+    <link rel="icon" href="/static/favicon/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="/static/favicon/apple-touch-icon.ico">
+    <title>Bruh`ders - Betting platform</title>
 </head>
 <body>
 <nav class="navbar navbar-light bg-light navbar-expand-md mb-3">
@@ -17,39 +28,49 @@
         <div class="col-lg-1"></div>
         <ul class="nav navbar-nav">
             {% if username %}
-            <li class="nav-item"><a class="nav-link" href="/bruhproject/wallet"><i class="bi bi-wallet2"></i> Wallets</a></li>
-            <li class="nav-item"><a class="nav-link"  href="/bruhproject/event"><i class="bi bi-calendar-event"></i> Events</a></li>
-            <li class="nav-item"><a class="nav-link"  href="#"><i class="bi bi-person-lines-fill"></i></span>Friends</a></li>
-            <li class="nav-item"><a class="nav-link"  href="/bruhproject/ranking"><i class="bi bi-star"></i> Ranking</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bruhproject/wallet"><i class="bi bi-wallet2"></i>
+                    Wallets</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bruhproject/event"><i class="bi bi-calendar-event"></i>
+                    Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person-lines-fill"></i></span>Friends</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/bruhproject/ranking"><i class="bi bi-star"></i> Ranking</a>
+                </li>
             {% endif %}
         </ul>
 
         <ul class="nav navbar-nav ml-auto">
             {% if username %}
-            <li class="nav-item"><a class="nav-link"  href="/bruhproject"><i class="bi bi-person-fill"></i> {{ username }}</a></li>
-            <li class="nav-item"><a class="nav-link"  href="/bruhproject/deposit"><i class="bi bi-cash-coin"></i> Deposit</a></li>
-            <li class="nav-item"><a class="nav-link"  href="/logout"><i class="bi bi-box-arrow-right"></i> Sign Out</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bruhproject"><i
+                        class="bi bi-person-fill"></i> {{ username }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bruhproject/deposit"><i class="bi bi-cash-coin"></i>
+                    Deposit</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout"><i class="bi bi-box-arrow-right"></i> Sign
+                    Out</a></li>
             {% else %}
-            <li class="nav-item"><a class="nav-link"  href="/login"><i class="bi bi-box-arrow-in-right"></i> Sign In</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right"></i> Sign In</a>
+                </li>
             {% endif %}
         </ul>
     </div>
 </nav>
 
 {% if messages %}
-<div class="messages">
-    {% for message in messages %}
-    <p{% if message.tags %} class="alert alert-{{ message.tags }} center"{% endif %}>{{ message }}<p>
-    {% endfor %}
-</div>
+    <div class="messages">
+        {% for message in messages %}
+            <p{% if message.tags %} class="alert alert-{{ message.tags }} center"{% endif %}>{{ message }}<p>
+        {% endfor %}
+    </div>
 {% endif %}
 
 <div class="container">
     {% block content %}
     {% endblock %}
 </div>
-
-<nav class="navbar navbar-light bg-light navbar-fixed-bottom navbar-expand-md fixed-bottom">
+<a href="#top" id="top-button">
+    <i class="bi bi-arrow-up-square"></i>
+</a>
+<nav class="navbar navbar-light bg-light navbar-fixed-bottom navbar-expand-md fixed-bottom" style="display: none">
     <div class="container">
         <ul class="nav navbar-nav">
             <li class="nav-item"><a href=".." class="nav-link"><i class="bi bi-arrow-return-right"></i> Return</a>
@@ -57,6 +78,46 @@
         </ul>
     </div>
 </nav>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+<div class="container">
+    <footer class="pt-4 pt-md-4 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <i class="bi bi-tropical-storm" style="font-size: 3rem">B</i>
+            <small class="d-block mb-3 text-muted">© 2020-2021</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Cool stuff</a></li>
+              <li><a class="text-muted" href="#">Random feature</a></li>
+              <li><a class="text-muted" href="#">Team feature</a></li>
+              <li><a class="text-muted" href="#">Stuff for developers</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Resource</a></li>
+              <li><a class="text-muted" href="#">Resource name</a></li>
+              <li><a class="text-muted" href="#">Another resource</a></li>
+              <li><a class="text-muted" href="#">Final resource</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Team</a></li>
+              <li><a class="text-muted" href="#">Locations</a></li>
+              <li><a class="text-muted" href="#">Privacy</a></li>
+              <li><a class="text-muted" href="#">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+</div>
+<script src="/static/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
 </body>
 </html>

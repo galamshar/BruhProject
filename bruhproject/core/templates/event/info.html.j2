@@ -9,7 +9,7 @@
         </div>
         {% if event.status %}
             <div class="col-lg-3 center">
-                <h6>Result: {{ results[event.status] }}</h6>
+                <h6>Status: {{ results[event.status] }}</h6>
             </div>
         {% endif %}
     </div>
@@ -22,11 +22,15 @@
 
     {% if bet_form and grouped_variants %}
 
-        <form method="post" class="center">
+        <form method="post" class="center betform">
+            <div class="header-top row">
+                <h6 class="pl-5 col-lg-10" style="padding-left: 3.5rem !important;">Betting form</h6>
+                <i class="bi bi-dash-lg col-lg-2 pl-2 hider"></i>
+            </div>
             <div class="form-group">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 {{ bet_form }}
-                <button type="submit" class="btn btn-secondary" style="margin-top: 7px">Stand!</button>
+                <button type="submit" class="btn btn-secondary betbutton" disabled style="margin-top: 7px">Stand!</button>
             </div>
         </form>
     {% endif %}
@@ -39,7 +43,8 @@
                 </div>
                 {% for variant in variants['variants'] %}
                     <div class="col-lg-2 center">
-                        <span>{{ variant.name }}: {{ '%0.2f' % variant.odd }}</span>
+                        <span>{{ variant.name }}: </span><a href="#" class="variant"
+                                                            data-variantid= {{ variant.id }}>{{ '%0.2f' % variant.odd }}</a>
                     </div>
                 {% endfor %}
             </div>

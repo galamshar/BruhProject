@@ -27,9 +27,16 @@ class BetEventForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BetEventForm, self).__init__(*args, **kwargs)
+        self.fields['wallet'].empty_label = "[ Select your wallet ]"
+        self.fields['wallet'].label = ""
+        self.fields['chosen_variant'].label = ""
+        self.fields['amount'].label = ""
+        self.fields['chosen_variant'].empty_label = "[ Click to variant for select ]"
         self.fields['amount'].widget.attrs['min'] = 1
+        self.fields['amount'].widget.attrs['placeholder'] = "Amount of bet"
+        self.fields['chosen_variant'].widget.attrs['disabled'] = True
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs['class'] = 'form-control shadow-none'
 
     def clean(self):
         super(BetEventForm, self).clean()
