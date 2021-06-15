@@ -1,16 +1,8 @@
-from .models import Fixture, Market, Variant, Bet, Wallet
+import base64
 
+from minio import Minio
 
-def onFixtureUpdate(update):
-    fixture = Fixture.objects.get(fixture_id=update.id)
-    if fixture:
-        fixture.status = update.status
-        fixture.start_date = update.start_date
-        fixture.save()
-    else:
-        new_fixture = Fixture(fixture_id=update.id, participant_1=update.participants[0],
-                              participant_2=update.participants[1], start_date=update.start_date, status=update.status)
-        new_fixture.save()
+from .models import Market, Variant, Bet, Wallet
 
 
 def onMarketUpdate(update):
@@ -60,3 +52,18 @@ def onVariantSettled(update):
             wallet = Wallet.objects.filter(owner__id=better.id)
             wallet.money += bet.amount * variant.odd
             wallet.save()
+
+
+client = Minio(
+    "localhost:9000",
+    access_key="minioadmin",
+    secret_key="minioadmin",
+    secure=False)
+
+
+def get_banners(bucket):
+    objects = client.list_objects("bruhproject")
+    images = []
+    for obj in objects:
+        images.append(base64.b64encode(client.get_object("bruhproject",obj.object_name).read()).decode('ascii'))
+    return images

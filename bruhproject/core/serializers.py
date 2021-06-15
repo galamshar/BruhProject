@@ -1,3 +1,5 @@
+import base64
+
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
@@ -63,3 +65,4 @@ class WalletSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Wallet
         fields = '__all__'
+

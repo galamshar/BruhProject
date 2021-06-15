@@ -35,7 +35,7 @@ class Event(models.Model):
     start_time = models.DateTimeField(blank=False, verbose_name='Event start time')
 
     def is_active(self):
-        if self.status in range[0,2]:
+        if self.status in range[0, 2]:
             return True
         else:
             return False
@@ -77,3 +77,4 @@ class Friendship(models.Model):
     friend = models.ForeignKey(User, null=False,
                                verbose_name='Friend', related_name='friend', on_delete=models.CASCADE)
     acceptance = models.BooleanField(null=False, verbose_name='Acceptance of familiarity')
+

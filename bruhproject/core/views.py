@@ -22,8 +22,9 @@ from rest_framework import permissions
 from bruhproject.core.serializers import UserSerializer, BetSerializer, VariantSerializer, WalletSerializer, \
     MarketSerializer, EventSerializer
 
-
 # REST API Views
+from .services import get_banners
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -101,14 +102,15 @@ def index(request):
     events = Event.objects.filter(status__gte=0).filter(status__lte=2)[:10]
     user_active_events = get_user_active_events(user)
     events_to_close = Event.objects.filter(status=3)
-    pic = get_picture_from_minio("pythonproject","yourpicturesname.jpg")
+    images = get_banners("bruhproject")
     return render(request, 'user/home.html.j2',
                   {'username': user.username,
                    'wallets': wallets,
                    'events': events,
                    'active_events': user_active_events,
                    'events_to_close': events_to_close,
-                   'pic' : pic })
+                   'images': images,
+                   'range': range(len(images))})
 
 
 @login_required(login_url='/login')
