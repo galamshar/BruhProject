@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 # Rest API imports
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework import permissions
 from rest_framework import viewsets
@@ -225,3 +226,19 @@ def finish_deposit(request):
                 wallet.money += make_deposit
                 wallet.save()
     return HttpResponseRedirect("/bruhproject")
+
+@login_required(login_url='/login')
+def sell_bet(request, bet_id):
+    bet = Bet.objects.get(id = bet_id)
+
+    user = request.user
+
+    if(bet.wallet.owner_id == user.id):
+        bet.wallet.money += bet.calculate_sell_price()
+        bet.wallet.save()
+        bet.delete()
+
+    return HttpResponseRedirect("/bruhproject")
+
+    
+

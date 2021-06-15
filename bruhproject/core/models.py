@@ -68,8 +68,18 @@ class Bet(models.Model):
     reward = models.FloatField()
     init_odd = models.FloatField()
 
-    def calc_sell_price(self):
-        return 
+    def calculate_sell_price(self):
+        difference = (self.init_odd - self.chosen_variant.odd)
+        price = 0
+
+        if(difference > 0):
+            price = self.amount * (difference + 1)* 0.85 
+        elif(difference == 0):
+            return 0.9*self.amount
+        else:
+            price = self.amount / (abs(difference) * 1.6)
+
+        return price
 
     def __str__(self):
         return 'Bet: ' + self.event.name

@@ -42,9 +42,9 @@
                             {% if user == bet.wallet.owner or bet.chosen_event.is_active() %}
                                 <td>{{ bet.chosen_variant.name }}</td>
                                 <td>{{ '%0.2f' % bet.amount }} $</td>
-                                <td>{{ '%0.2f' % bet.chosen_variant.odd }}</td> 
+                                <td>{{ '%0.2f' % bet.init_odd }}</td> 
                                 <td>{{ '%0.2f' % bet.reward }} $</td>
-                                <td> <a href="">{{ '%0.2f' %  }}</a> </td>
+                                <td> <a href="{{ "{}{}".format("/bruhproject/bet/sell/",bet.id)}}">{{ '%0.2f' % bet.calculate_sell_price() }}</a> </td>
                             {% endif %}
                         </tr>
                     {% endfor %}

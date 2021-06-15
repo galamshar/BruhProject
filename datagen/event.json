@@ -2,29 +2,29 @@
     "type": 3,
     "entries": [
         {
-            "fixtureId": 2,
+            "fixtureId": 4,
             "fixture": {
                 "status": 1,
                 "league": {
                     "id": 1,
-                    "name": "Duel"
+                    "name": "Project"
                 },
                 "sport": {
                     "id": 1,
-                    "name": "Duel"
+                    "name": "Python"
                 },
                 "location": {
                     "id": 1,
-                    "name": "Russia"
+                    "name": "Dimash"
                 },
                 "participants": [
                     {
                         "id": 3,
-                        "name": "Pushkin"
+                        "name": "Azat"
                     },
                     {
                         "id": 4,
-                        "name": "Dantes"
+                        "name": "Gala"
                     }
                 ],
                 "startDate": "2021-07-15T18:20:38.94964Z",

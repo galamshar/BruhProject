@@ -148,7 +148,7 @@ def prepare_markets(update, settle):
 def rabbit_callback(ch, method, props, body: bytes):
     update = json.loads(body)
     type = int(update["type"])
-    print("bbb")
+
     if type == 3:
         for f_update in prepare_fixture(update):
             fixture_update(f_update)
@@ -167,8 +167,6 @@ def rabbit_background():
         virtual_host="PreMatch",
         credentials=pika.PlainCredentials("dev", "")
     )
-
-    print("aaa")
 
     with pika.BlockingConnection(params) as connection:
         with connection.channel() as channel:
