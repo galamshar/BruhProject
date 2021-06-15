@@ -72,16 +72,14 @@ def update_existing_market(update, market):
 
             if update["settle"]:
                 for bet in Bet.objects.filter(chosen_variant__id=variant.id):
+                    bet.settled = True
                     if variant.settlement == 2:
                         bet.wallet.money += bet.reward
-                        bet.save()
-                        bet.wallet.save()
                     elif variant.settlement == 3:
                         bet.reward = bet.amount
-                        bet.save()
                         bet.wallet.money += bet.reward
-                        bet.wallet.save()
-                    bet.settled = True
+                    bet.save()
+                    bet.wallet.save()
 
 
 def create_new_market(update):
