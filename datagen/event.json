@@ -1,0 +1,35 @@
+{
+    "type": 3,
+    "entries": [
+        {
+            "fixtureId": 2,
+            "fixture": {
+                "status": 1,
+                "league": {
+                    "id": 1,
+                    "name": "Duel"
+                },
+                "sport": {
+                    "id": 1,
+                    "name": "Duel"
+                },
+                "location": {
+                    "id": 1,
+                    "name": "Russia"
+                },
+                "participants": [
+                    {
+                        "id": 3,
+                        "name": "Pushkin"
+                    },
+                    {
+                        "id": 4,
+                        "name": "Dantes"
+                    }
+                ],
+                "startDate": "2021-07-15T18:20:38.94964Z",
+                "lastUpdate": "2021-06-15T18:20:38.94964Z"
+            }
+        }
+    ]
+}

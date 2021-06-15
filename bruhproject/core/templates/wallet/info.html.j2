@@ -32,6 +32,7 @@
                         <th>Bet</th>
                         <th>Odds</th>
                         <th>Possible win</th>
+                        <th>Sell</th>
                     </tr>
                     </thead>
                     {% for bet in open_bets|sort(attribute='chosen_event.start_time') %}
@@ -41,8 +42,9 @@
                             {% if user == bet.wallet.owner or bet.chosen_event.is_active() %}
                                 <td>{{ bet.chosen_variant.name }}</td>
                                 <td>{{ '%0.2f' % bet.amount }} $</td>
-                                <td>{{ '%0.2f' % bet.chosen_variant.odd }}</td>
+                                <td>{{ '%0.2f' % bet.chosen_variant.odd }}</td> 
                                 <td>{{ '%0.2f' % bet.reward }} $</td>
+                                <td> <a href="">{{ '%0.2f' %  }}</a> </td>
                             {% endif %}
                         </tr>
                     {% endfor %}

@@ -66,9 +66,15 @@ class Bet(models.Model):
     settled = models.BooleanField(default=False)
     amount = models.FloatField()
     reward = models.FloatField()
+    init_odd = models.FloatField()
+
+    def calc_sell_price(self):
+        return 
 
     def __str__(self):
         return 'Bet: ' + self.event.name
+
+    
 
 
 class Friendship(models.Model):

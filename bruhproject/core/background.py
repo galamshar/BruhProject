@@ -66,7 +66,7 @@ def update_existing_market(update, market):
                 variant.market = market
 
             if variant.settlement == 1 or variant.settlement == 2:
-                print("Settled", variant.id)
+                print("settled", variant.id)
 
             variant.save()
 
@@ -108,12 +108,15 @@ def create_new_market(update):
 def prepare_fixture(update):
     updates = []
 
-    for entry in update["Entries"]:
+    
+
+    for entry in update["entries"]:
+        start_time = datetime.datetime.strptime(entry["fixture"]["startDate"][:entry["fixture"]["startDate"].index('.')], "%Y-%m-%dT%H:%M:%S")
         updates.append({
-            "id": entry["FixtureId"],
-            "status": int(entry["Fixture"]["Status"]),
-            "start_time": datetime.datetime.strptime(entry["Fixture"]["StartDate"], "%Y-%m-%dT%H:%M:%SZ"),
-            "name": " - ".join([p["Name"] for p in entry["Fixture"]["Participants"]])})
+            "id": entry["fixtureId"],
+            "status": int(entry["fixture"]["status"]),
+            "start_time": start_time,
+            "name": " - ".join([p["name"] for p in entry["fixture"]["participants"]])})
 
     return updates
 
@@ -121,20 +124,20 @@ def prepare_fixture(update):
 def prepare_markets(update, settle):
     updates = []
 
-    for entry in update["Entries"]:
-        for market in entry["Markets"]:
-            if not any(filter(lambda p: int(p["Id"]) == DEFAULT_PROVIDER_ID, market["Providers"])):
+    for entry in update["entries"]:
+        for market in entry["markets"]:
+            if not any(filter(lambda p: int(p["id"]) == DEFAULT_PROVIDER_ID, market["providers"])):
                 continue
 
-            variants = [bet for p in filter(lambda p: p["Id"] == DEFAULT_PROVIDER_ID, market["Providers"]) for bet in
-                        p["Bets"]]
-            variants = [Variant(id=int(v["Id"]), name=v["Name"], status=int(v["Status"]), odd=float(v["Price"]),
-                                settlement=int(v["Settlement"])) for v in variants]
+            variants = [bet for p in filter(lambda p: p["id"] == DEFAULT_PROVIDER_ID, market["providers"]) for bet in
+                        p["bets"]]
+            variants = [Variant(id=int(v["id"]), name=v["name"], status=int(v["status"]), odd=float(v["price"]),
+                                settlement=int(v["settlement"])) for v in variants]
 
             updates.append({
-                "id": int(market["Id"]),
-                "fixture_id": int(entry["FixtureId"]),
-                "name": market["Name"],
+                "id": int(market["id"]),
+                "fixture_id": int(entry["fixtureId"]),
+                "name": market["name"],
                 "variants": variants,
                 "settle": settle
             })
@@ -144,8 +147,8 @@ def prepare_markets(update, settle):
 
 def rabbit_callback(ch, method, props, body: bytes):
     update = json.loads(body)
-    type = int(update["Type"])
-
+    type = int(update["type"])
+    print("bbb")
     if type == 3:
         for f_update in prepare_fixture(update):
             fixture_update(f_update)
@@ -155,7 +158,7 @@ def rabbit_callback(ch, method, props, body: bytes):
 
 
 def run_in_background(runnable):
-    threading.Thread(target=runnable).start()
+    threading.Thread(target=runnable, daemon=True).start()
 
 
 def rabbit_background():
@@ -164,6 +167,8 @@ def rabbit_background():
         virtual_host="PreMatch",
         credentials=pika.PlainCredentials("dev", "")
     )
+
+    print("aaa")
 
     with pika.BlockingConnection(params) as connection:
         with connection.channel() as channel:

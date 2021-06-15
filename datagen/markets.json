@@ -1,0 +1,43 @@
+{
+    "type": 2,
+    "entries": [
+        {
+            "fixtureId": 2,
+            "markets": [
+                {
+                    "id": 1,
+                    "name": "1x2",
+                    "providers": [
+                        {
+                            "id": 8,
+                            "name": "Bruh'ders",
+                            "bets":[
+                                {
+                                    "id": 3,
+                                    "name": "1",
+                                    "line": "+400",
+                                    "baseLine": "-400",
+                                    "status": 1,
+                                    "settlement": 0,
+                                    "lastUpdate": "2021-07-15T18:20:38.94964Z",
+                                    "price" : 3.0
+                                },
+                                {
+                                    "id": 4,
+                                    "name": "2",
+                                    "line": "+400",
+                                    "baseLine": "-400",
+                                    "status": 1,
+                                    "settlement": 0,
+                                    "lastUpdate": "2021-07-15T18:20:38.94964Z",
+                                    "price": 1.5
+                                }
+                            ],
+                            "lastUpdate": "2021-07-15T18:20:38.94964Z"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

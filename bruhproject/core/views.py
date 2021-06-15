@@ -174,6 +174,7 @@ def event_info(request, event_id):
             bet.wallet.money -= bet.amount
             bet.wallet.save()
             bet.reward = round(bet.amount * bet.chosen_variant.odd, 2)
+            bet.init_odd = bet.chosen_variant.odd
             bet.save()
             messages.success(request, 'Your bet was accepted.')
             return HttpResponseRedirect(".")
