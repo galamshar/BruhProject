@@ -1,5 +1,5 @@
 from itertools import groupby
-from operator import attrgetter, itemgetter
+from operator import attrgetter, imod, itemgetter
 
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
@@ -13,6 +13,7 @@ from .models import Wallet, Event, Bet, Market, Variant
 from .forms import BetEventForm, NewUserForm
 from django.template.loader import render_to_string
 import logging
+from .minioclass import get_picture_from_minio
 
 # Rest API imports
 from django.contrib.auth.models import User
@@ -100,12 +101,14 @@ def index(request):
     events = Event.objects.filter(status__gte=0).filter(status__lte=2)[:10]
     user_active_events = get_user_active_events(user)
     events_to_close = Event.objects.filter(status=3)
+    pic = get_picture_from_minio("pythonproject","yourpicturesname.jpg")
     return render(request, 'user/home.html.j2',
                   {'username': user.username,
                    'wallets': wallets,
                    'events': events,
                    'active_events': user_active_events,
-                   'events_to_close': events_to_close})
+                   'events_to_close': events_to_close,
+                   'pic' : pic })
 
 
 @login_required(login_url='/login')
