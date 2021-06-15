@@ -1,27 +1,22 @@
-from itertools import groupby
-from operator import attrgetter, imod, itemgetter
-
-from django.contrib.auth import login
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.utils import timezone
-from datetime import datetime
-from .models import Wallet, Event, Bet, Market, Variant
-from .forms import BetEventForm, NewUserForm
-from django.template.loader import render_to_string
 import logging
-from .minioclass import get_picture_from_minio
+from itertools import groupby
+from operator import attrgetter
 
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 # Rest API imports
 from django.contrib.auth.models import User
-from rest_framework import viewsets, mixins
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from rest_framework import permissions
+from rest_framework import viewsets
+
 from bruhproject.core.serializers import UserSerializer, BetSerializer, VariantSerializer, WalletSerializer, \
     MarketSerializer, EventSerializer
-
+from .forms import BetEventForm, NewUserForm
+from .models import Wallet, Event, Bet, Market, Variant
 # REST API Views
 from .services import get_banners
 
