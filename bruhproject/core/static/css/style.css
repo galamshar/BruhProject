@@ -11,15 +11,15 @@ body {
 }
 
 .refund {
-    background-color: #FFFF33;
+    background-color: #FFFF33 !important;
 }
 
 .lost {
-    background-color: #d9534f;
+    background-color: #d9534f !important;
 }
 
 .won {
-    background-color: #5cb85c;
+    background-color: #5cb85c !important;
 }
 
 textarea {

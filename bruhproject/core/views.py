@@ -126,8 +126,8 @@ def wallet_info(request, wallet_id):
     #     messages.error(request, 'You don't own this wallet.!')
     #     return HttpResponseRedirect('/bruhproject/')
     bets = Bet.objects.filter(wallet__id=wallet.id)
-    open_bets = bets.filter(chosen_event__status__gte=0).filter(chosen_event__status__lte=2).all()
-    closed_bets = bets.filter(chosen_event__status=3).all()
+    open_bets = bets.filter(settled=False).all()
+    closed_bets = bets.filter(settled=True).all()
     return render(request, 'wallet/info.html.j2',
                   {'username': user.username,
                    'wallet': wallet,
@@ -148,7 +148,7 @@ def event_list(request):
 def event_info(request, event_id):
     event = Event.objects.get(id=event_id)
     fields = Event._meta.get_fields()
-    variants = Variant.objects.filter(market__event_id=event_id).order_by('market_id')
+    variants = Variant.objects.filter(market__event_id=event_id, status=1).order_by('market_id')
     results = {0: "Not set", 1: "Not started yet", 2: "Started", 3: "Finished", 4: "Cancelled", 5: "Postponed",
                6: "Interrupted", 7: "Abandoned", 8: "Coverage Lost", 9: "About to start"}
     grouped_variants = [
@@ -227,18 +227,16 @@ def finish_deposit(request):
                 wallet.save()
     return HttpResponseRedirect("/bruhproject")
 
+
 @login_required(login_url='/login')
 def sell_bet(request, bet_id):
-    bet = Bet.objects.get(id = bet_id)
+    bet = Bet.objects.get(id=bet_id)
 
     user = request.user
 
-    if(bet.wallet.owner_id == user.id):
+    if (bet.wallet.owner_id == user.id):
         bet.wallet.money += bet.calculate_sell_price()
         bet.wallet.save()
         bet.delete()
 
     return HttpResponseRedirect("/bruhproject")
-
-    
-

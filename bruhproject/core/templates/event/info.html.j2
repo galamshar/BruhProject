@@ -78,9 +78,9 @@
                         {% if not bet.settled %}
                             <tr>
                                 {% else %}
-                                {% if bet.chosen_variant.status == 2 %}
+                                {% if bet.chosen_variant.settlement == 2 %}
                                     <tr class="won">
-                                        {% elif bet.chosen_variant.status == 3 %}
+                                        {% elif bet.chosen_variant.settlement == 3 %}
                                     <tr class="refund">
                                         {% else %}
                                     <tr class="lost">
