@@ -1,5 +1,4 @@
-## AituForum
-Forum for students ASTANA IT UNIVERSITY, where students can discuss general topics of interest and create different topics on different topics.
+## BruhProject
 
 ## How To Deploy
 
