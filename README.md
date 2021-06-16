@@ -14,12 +14,15 @@ You should be able to browse components of the Minio by using the below URLs :
 Minio : http://webapi:9000/
 ```
 Create new bucket and set in the services.py your Minio parameters: 
+
 ![alt services.py](https://i.imgur.com/8Ap5imv.png)
 
 After that in the settings.py set your database parameters:
+
 ![alt dbsettings](https://i.imgur.com/iWZ1340.png)
 
 And set your broker parameters in the background.py:
+
 ![alt brokersett](https://i.imgur.com/FmsHkIM.png)
 
 Finally, just run python server:
