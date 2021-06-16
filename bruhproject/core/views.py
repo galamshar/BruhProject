@@ -199,7 +199,7 @@ def ranking_list(request):
 
 
 def get_user_active_bets(user):
-    active_bets = Bet.objects.filter(wallet__owner=user, settled=False)
+    active_bets = Bet.objects.filter(wallet__owner=user, settled=False).distinct('chosen_event__name')
     return active_bets
 
 

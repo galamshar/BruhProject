@@ -30,7 +30,8 @@
             <div class="form-group">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 {{ bet_form }}
-                <button type="submit" class="btn btn-secondary betbutton" disabled style="margin-top: 7px">Stand!</button>
+                <button type="submit" class="btn btn-secondary betbutton" disabled style="margin-top: 7px">Stand!
+                </button>
             </div>
         </form>
     {% endif %}
@@ -51,6 +52,9 @@
             <hr/>
         {% endfor %}
     </div>
+    {% if not grouped_variants %}
+        <div class="center pt-6 pb-6">No available markets yet.</div>
+    {% endif %}
     {% if bets %}
         <div class="row">
             <div class="col-lg-6">
@@ -101,7 +105,5 @@
                 </table>
             </div>
         </div>
-    {% else %}
-        <div class="center pt-6 pb-6">No available markets yet.</div>
     {% endif %}
 {% endblock %}
