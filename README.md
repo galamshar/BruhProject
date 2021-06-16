@@ -10,7 +10,7 @@ docker run -p 9000:9000 minio/minio server /data
 ```
 You should be able to browse components of the Minio by using the below URLs :
 ```plaintext
-Minio : http://webapi:9000/
+Minio : http://localhost:9000/
 ```
 Create new bucket and set in the services.py your Minio parameters: 
 
